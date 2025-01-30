@@ -1,10 +1,7 @@
 package com.example.warehouse.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -14,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "registration_order")
@@ -40,5 +38,6 @@ public class Order {
     private BigDecimal sum;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 }

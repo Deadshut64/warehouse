@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 /**
  * Класс Kafka producer для отправки сообщений.
  */
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class KafkaProducer {
 
     @Value("${topic.name}")
@@ -22,11 +24,6 @@ public class KafkaProducer {
 
     private final KafkaTemplate<String, byte[]> kafkaTemplate;
 
-    public KafkaProducer(ObjectMapper objectMapper, KafkaTemplate<String, byte[]> kafkaTemplate) {
-        this.objectMapper = objectMapper;
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
     /**
      * Отпавляем данные пользователя в Kafka.
      *
@@ -35,12 +32,12 @@ public class KafkaProducer {
      * @throws JsonProcessingException the json processing exception
      */
     public String sendMessage(Order order) throws JsonProcessingException {
-//        log.info("{} Налало отправки сообшения", this.getClass());
+        log.info("{} Налало отправки сообшения", this.getClass());
 
         byte[] orderAsMessage = objectMapper.writeValueAsBytes(order);
         kafkaTemplate.send(topicName, orderAsMessage);
 
-//        log.info("order отправлен");
+        log.info("order отправлен");
 
         return "Сообщение отправлено";
     }

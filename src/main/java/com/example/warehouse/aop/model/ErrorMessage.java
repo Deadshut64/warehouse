@@ -1,12 +1,5 @@
 package com.example.warehouse.aop.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+public record ErrorMessage(String description) {
 
-@Getter
-@AllArgsConstructor
-public class ErrorMessage {
-
-    private String description;
 }
