@@ -8,6 +8,9 @@ import org.hibernate.annotations.Parameter;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+/**
+ * The Order.
+ */
 @Entity
 @Getter
 @Setter
