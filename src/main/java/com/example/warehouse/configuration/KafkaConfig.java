@@ -6,13 +6,13 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,6 +22,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
+    private final KafkaProperties kafkaProperties;
+
     /**
      * Возвращает экземпляр ProducerFactory<String, String>.
      *
@@ -30,8 +32,8 @@ public class KafkaConfig {
     @Bean
     public ProducerFactory<String, byte[]> producerFactory() {
 
-        Map<String, Object> properties = new HashMap<>();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        Map<String, Object> properties = kafkaProperties.buildProducerProperties();
+
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class);
 
@@ -56,6 +58,17 @@ public class KafkaConfig {
     @Bean
     public NewTopic topic(@Value("${topic.name}")
                           String topicName) {
+        return new NewTopic(topicName, 2, (short) 1);
+    }
+
+    /**
+     * Создает новый топик для не обработанных сообщений.
+     *
+     * @return the NewTopic
+     */
+    @Bean
+    public NewTopic topicDeadLetter(@Value("${topic.dead}")
+                                    String topicName) {
         return new NewTopic(topicName, 2, (short) 1);
     }
 }

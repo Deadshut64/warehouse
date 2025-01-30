@@ -43,10 +43,9 @@ public class OrderService {
         } catch (Exception e) {
             throw new OrderSaveException("Не удалось сохранить заказ в Базу");
         }
-
-
     }
 
     public void deleteOrderById(UUID id) {
+        orderRepository.deleteById(id);
     }
 }

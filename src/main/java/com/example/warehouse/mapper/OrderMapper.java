@@ -2,6 +2,7 @@ package com.example.warehouse.mapper;
 
 import com.example.warehouse.dto.OrderDto;
 import com.example.warehouse.model.Order;
+import com.example.warehouse.model.Status;
 
 public class OrderMapper {
 
@@ -9,6 +10,7 @@ public class OrderMapper {
         return Order.builder()
                 .client(orderDto.getClient())
                 .sum(orderDto.getSum())
+                .status(Status.CREATED)
                 .build();
     }
 }

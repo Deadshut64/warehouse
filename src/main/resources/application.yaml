@@ -3,6 +3,7 @@ server:
 
 topic:
   name: topic.registration
+  dead: dead.letter.write
 
 spring:
   application:
@@ -15,6 +16,11 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       retries: 5
+    consumer:
+      auto-offset-reset: earliest
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: "default"
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres

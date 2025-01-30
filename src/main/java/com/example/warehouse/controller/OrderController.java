@@ -32,13 +32,13 @@ public class OrderController {
     }
 
     @PostMapping("/change-status")
-    public ResponseEntity changeStatusById(@RequestParam UUID id, @RequestParam Status status) {
+    public ResponseEntity<Object> changeStatusById(@RequestParam UUID id, @RequestParam Status status) {
         orderService.changeStatus(id, status);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Заказ с id: " + id + " успешно обновлен, новый статус " + status);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity deleteOrderById(@RequestParam UUID id) {
+    public ResponseEntity<Object> deleteOrderById(@RequestParam UUID id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.ok("Заказ с id: " + id + " удален");
     }
