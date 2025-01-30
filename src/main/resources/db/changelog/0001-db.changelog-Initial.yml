@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - property:
+      name: uuid_function
+      value: uuid_generate_v4()
+      dbms: postgresql
+  - changeSet:
+      id: warehouse.registration.user
+      author: s.chuchmanov
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: registration_order
+      changes:
+        - createTable:
+            tableName: registration_order
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: order_id_pkey
+              - column:
+                  name: client
+                  type: varchar(100)
+              - column:
+                  name: sum
+                  type: bigint
+              - column:
+                  name: status
+                  type: varchar(100)

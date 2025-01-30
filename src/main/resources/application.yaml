@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+topic:
+  name: topic.registration
+
+spring:
+  application:
+    name: WarehouseService
+    description: Order registration service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      retries: 5
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.yml
+  sql:
+    init:
+      platform: postgres
+      mode: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # ???????? ??? ????????? endpoints
+  endpoint:
+    health:
+      show-details: always # ?????????? ?????? ? health endpoint
+
+logging:
+  level:
+    root: INFO

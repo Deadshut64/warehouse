@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: warehouse.uuid-ossp
+      author: s.chuchmanov
+      dbms: postgresql
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+  - include:
+      file: 0001-db.changelog-Initial.yml
+      relativeToChangelogFile: true
