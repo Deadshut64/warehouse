@@ -1,4 +1,11 @@
 package com.example.warehouse.aop.model;
 
-public record ErrorMessage(String description) {
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@RequiredArgsConstructor
+public class ErrorMessage {
+
+    private final String description;
 }
